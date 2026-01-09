@@ -1,0 +1,113 @@
+# PaperSqueeze Configuration
+# Copy this file to config.yaml and customize for your setup
+
+# Paperless-ngx connection
+paperless:
+  # API base URL (without trailing slash)
+  # Use environment variable for flexibility
+  url: "${PAPERLESS_URL:http://localhost:8000/api}"
+
+  # API token (get from paperless-ngx admin -> tokens)
+  # REQUIRED - set via environment variable
+  token: "${PAPERLESS_API_TOKEN}"
+
+  # SSL verification (set to false if using self-signed certs)
+  verify_ssl: true
+
+  # Request timeout in seconds
+  timeout_seconds: 30
+
+# Anthropic Claude AI configuration
+anthropic:
+  # API key from console.anthropic.com
+  # REQUIRED - set via environment variable
+  api_key: "${ANTHROPIC_API_KEY}"
+
+  # Model for fast classification (cheaper, faster)
+  gatekeeper_model: "claude-haiku-4-5-20250514"
+
+  # Model for detailed extraction (more accurate)
+  specialist_model: "claude-sonnet-4-20250514"
+
+  # Maximum tokens in AI response
+  max_tokens: 1024
+
+  # AI request timeout
+  timeout_seconds: 60
+
+  # Retry attempts for failed requests
+  max_retries: 2
+
+# Processing behavior
+processing:
+  # Minimum confidence to auto-fill empty fields (0.0 to 1.0)
+  confidence_threshold: 0.7
+
+  # Minimum confidence to suggest overwriting existing values
+  review_threshold: 0.9
+
+  # Maximum document content length sent to AI
+  max_content_length: 25000
+
+  # Dry run mode - don't apply changes, just log
+  dry_run: false
+
+# Logging
+log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+
+# Tags used for review workflow
+# These must match tag names in your paperless-ngx instance
+# Create these tags before using PaperSqueeze!
+tags:
+  review:
+    needs_review: "ai-review-needed"
+    approved: "ai-approved"
+    rejected: "ai-rejected"
+    processed: "ai-processed"
+
+  # Category tags (optional, for template auto-tagging)
+  categories:
+    utilities: "utilities"
+    car: "car"
+    tax: "tax"
+    income: "income"
+    accounting: "accounting"
+
+# Document types
+# These must match document type names in your paperless-ngx instance
+document_types:
+  invoice: "Invoice"
+  tax_guide: "Tax Guide"
+  payment_guide: "Payment Guide"
+  receipt: "Receipt"
+  payroll: "Payroll"
+
+# Custom fields mapping
+# Map internal field names to your paperless-ngx custom field names
+# These must match exactly (case-sensitive)
+fields:
+  financial:
+    total_gross: "Total Gross"
+    total_net: null  # Set to null if not using
+    total_vat: null
+
+  identifiers:
+    invoice_number: "Invoice Number"
+    nif: null  # Portuguese tax ID
+    contract_ref: "Contract Reference"
+
+  payment:
+    mb_entity: null  # Multibanco entity
+    mb_ref: null     # Multibanco reference
+    mb_ref_full: "Full MB Reference"
+
+  dates:
+    issue_date: "Issue Date"
+    due_date: "Due Date"
+    period: "Period"
+
+  metrics:
+    consumption: "Consumption"
+
+  description:
+    short_desc: "Description"

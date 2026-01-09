@@ -1,0 +1,74 @@
+# PaperSqueeze Configuration
+
+# Paperless-ngx connection
+paperless:
+  # Use localhost from inside the container
+  url: "http://localhost:8000/api"
+  token: "${PAPERLESS_API_TOKEN}"
+  verify_ssl: true
+  timeout_seconds: 30
+
+# Anthropic Claude AI configuration
+anthropic:
+  api_key: "${ANTHROPIC_API_KEY}"
+  gatekeeper_model: "claude-haiku-4-5-20250514"
+  specialist_model: "claude-sonnet-4-20250514"
+  max_tokens: 1024
+  timeout_seconds: 60
+  max_retries: 2
+
+# Processing behavior
+processing:
+  confidence_threshold: 0.7
+  review_threshold: 0.9
+  max_content_length: 25000
+  dry_run: false
+
+# Logging
+log_level: "INFO"
+
+# Tags used for review workflow
+tags:
+  review:
+    needs_review: "ai-review-needed"
+    approved: "ai-approved"
+    rejected: "ai-rejected"
+    processed: "ai-processed"
+  categories:
+    utilities: "utilities"
+    car: "car"
+    tax: "tax"
+    income: "income"
+    accounting: "accounting"
+
+# Document types (matched to your paperless-ngx Portuguese names)
+document_types:
+  invoice: "Fatura"
+  tax_guide: "Declaração Fiscal"
+  payment_guide: "Guia de Pagamento"
+  receipt: "Recibo"
+  payroll: "Recibo de Vencimentos"
+
+# Custom fields mapping - matched to your paperless-ngx field names
+fields:
+  financial:
+    total_gross: "amt_primary"
+    total_net: "inv_total_net"
+    total_vat: "inv_total_vat"
+  identifiers:
+    invoice_number: "inv_number"
+    nif: "inv_supplier_nif"
+    contract_ref: "gen_numero_referencia"
+  payment:
+    mb_entity: "pay_mb_entity"
+    mb_ref: "pay_mb_ref"
+    mb_ref_full: "pay_ref"  # Generic payment reference
+  dates:
+    issue_date: "inv_issue_date"
+    due_date: "pay_due_date"
+    period: "gen_periodo"  # Generic period (billing, tax, fiscal)
+  metrics:
+    consumption: "util_consumption"
+    contract_power: "gen_ref_extra"  # Generic extra reference (kVA, CPE, plates)
+  description:
+    short_desc: "gen_descricao"

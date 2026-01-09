@@ -1,0 +1,637 @@
+[2026-01-09 01:24:54] Processing document 803 (2026-01-07 Aurorambarina 2025-04-29 Contas Resolvidas Unipessoal, Lda Contabilidade Mar'25.pdf)
+2026-01-09 01:24:56 [INFO] papersqueeze: Processing document 803
+2026-01-09 01:24:56 [INFO] papersqueeze: Taking pre-state snapshot...
+Traceback (most recent call last):
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno -2] Name or service not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/__main__.py", line 7, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 282, in main
+    return cmd_func(args, config)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 139, in cmd_process
+    pre_snapshot = client.get_document_snapshot(doc_id)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/api/paperless.py", line 238, in get_document_snapshot
+    response = self.client.get(f"/documents/{doc_id}/")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1053, in get
+    return self.request(
+           ^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno -2] Name or service not known
+[2026-01-09 01:24:56] ERROR: Document 803 processing failed (exit code: 1)
+[2026-01-09 01:25:11] Processing document 804 (2026-01-07 Aurorambarina 2025-12-26 Miio Carregamento EV 42kWh.pdf)
+2026-01-09 01:25:12 [INFO] papersqueeze: Processing document 804
+2026-01-09 01:25:12 [INFO] papersqueeze: Taking pre-state snapshot...
+Traceback (most recent call last):
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno -2] Name or service not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/__main__.py", line 7, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 282, in main
+    return cmd_func(args, config)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 139, in cmd_process
+    pre_snapshot = client.get_document_snapshot(doc_id)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/api/paperless.py", line 238, in get_document_snapshot
+    response = self.client.get(f"/documents/{doc_id}/")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1053, in get
+    return self.request(
+           ^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno -2] Name or service not known
+[2026-01-09 01:25:12] ERROR: Document 804 processing failed (exit code: 1)
+[2026-01-09 01:25:25] Processing document 805 (2025-12-31 Aurorambarina 2025-12-31 PRIO.E - MOBILITY SOLUTIONS LDA Carregamento EV 51kWh.pdf)
+2026-01-09 01:25:26 [INFO] papersqueeze: Processing document 805
+2026-01-09 01:25:26 [INFO] papersqueeze: Taking pre-state snapshot...
+Traceback (most recent call last):
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno -2] Name or service not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/__main__.py", line 7, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 282, in main
+    return cmd_func(args, config)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 139, in cmd_process
+    pre_snapshot = client.get_document_snapshot(doc_id)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/api/paperless.py", line 238, in get_document_snapshot
+    response = self.client.get(f"/documents/{doc_id}/")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1053, in get
+    return self.request(
+           ^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno -2] Name or service not known
+[2026-01-09 01:25:27] ERROR: Document 805 processing failed (exit code: 1)
+[2026-01-09 01:25:42] Processing document 806 (2025-12-31 Aurorambarina 2025-12-31 Aurorambarina Unipessoal Lda Vencimento Dez'25.pdf)
+2026-01-09 01:25:43 [INFO] papersqueeze: Processing document 806
+2026-01-09 01:25:43 [INFO] papersqueeze: Taking pre-state snapshot...
+Traceback (most recent call last):
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno -2] Name or service not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/__main__.py", line 7, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 282, in main
+    return cmd_func(args, config)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 139, in cmd_process
+    pre_snapshot = client.get_document_snapshot(doc_id)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/api/paperless.py", line 238, in get_document_snapshot
+    response = self.client.get(f"/documents/{doc_id}/")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1053, in get
+    return self.request(
+           ^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno -2] Name or service not known
+[2026-01-09 01:25:43] ERROR: Document 806 processing failed (exit code: 1)
+[2026-01-09 01:29:53] === PaperSqueeze post_consume.sh called ===
+[2026-01-09 01:29:53] Args: 807 2026-01-07 Aurorambarina 2025-04-29 Contas Resolvidas Unipessoal, Lda Contabilidade Mar'25.pdf /usr/src/paperless/media/documents/originals/AURORAMBARINA/2026/Aurorambarina/-- Aurorambarina -- Fatura.pdf /usr/src/paperless/media/documents/thumbnails/0000807.webp /api/documents/807/download/ /api/documents/807/thumb/ Aurorambarina ai-processed,💼 CTB,📥 IN
+[2026-01-09 01:29:53] DOCUMENT_ID env: 807
+[2026-01-09 01:29:53] Processing document 807 (2026-01-07 Aurorambarina 2025-04-29 Contas Resolvidas Unipessoal, Lda Contabilidade Mar'25.pdf)
+[2026-01-09 01:29:53] === PaperSqueeze post_consume.sh called ===
+[2026-01-09 01:29:53] Args: 808 2026-01-07 Aurorambarina 2025-12-26 Miio Carregamento EV 42kWh.pdf /usr/src/paperless/media/documents/originals/AURORAMBARINA/2026/Aurorambarina/-- Aurorambarina -- Fatura_01.pdf /usr/src/paperless/media/documents/thumbnails/0000808.webp /api/documents/808/download/ /api/documents/808/thumb/ Aurorambarina ai-processed,🚗 AUT,📥 IN,⚡ LUZ
+[2026-01-09 01:29:53] DOCUMENT_ID env: 808
+[2026-01-09 01:29:53] Processing document 808 (2026-01-07 Aurorambarina 2025-12-26 Miio Carregamento EV 42kWh.pdf)
+2026-01-09 01:29:54 [INFO] papersqueeze: Processing document 807
+2026-01-09 01:29:54 [INFO] papersqueeze: Taking pre-state snapshot...
+Traceback (most recent call last):
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno -2] Name or service not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/__main__.py", line 7, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 282, in main
+    return cmd_func(args, config)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 139, in cmd_process
+    pre_snapshot = client.get_document_snapshot(doc_id)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/api/paperless.py", line 238, in get_document_snapshot
+    response = self.client.get(f"/documents/{doc_id}/")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1053, in get
+    return self.request(
+           ^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno -2] Name or service not known
+[2026-01-09 01:29:54] ERROR: Document 807 processing failed (exit code: 1)
+2026-01-09 01:29:54 [INFO] papersqueeze: Processing document 808
+2026-01-09 01:29:54 [INFO] papersqueeze: Taking pre-state snapshot...
+Traceback (most recent call last):
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno -2] Name or service not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/__main__.py", line 7, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 282, in main
+    return cmd_func(args, config)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 139, in cmd_process
+    pre_snapshot = client.get_document_snapshot(doc_id)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/api/paperless.py", line 238, in get_document_snapshot
+    response = self.client.get(f"/documents/{doc_id}/")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1053, in get
+    return self.request(
+           ^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno -2] Name or service not known
+[2026-01-09 01:29:55] ERROR: Document 808 processing failed (exit code: 1)
+[2026-01-09 01:30:04] === PaperSqueeze post_consume.sh called ===
+[2026-01-09 01:30:04] Args: 809 2025-12-31 Aurorambarina 2025-12-31 PRIO.E - MOBILITY SOLUTIONS LDA Carregamento EV 51kWh.pdf /usr/src/paperless/media/documents/originals/AURORAMBARINA/2025/Aurorambarina/-- Aurorambarina -- Fatura.pdf /usr/src/paperless/media/documents/thumbnails/0000809.webp /api/documents/809/download/ /api/documents/809/thumb/ Aurorambarina ai-processed,📥 IN
+[2026-01-09 01:30:04] DOCUMENT_ID env: 809
+[2026-01-09 01:30:04] Processing document 809 (2025-12-31 Aurorambarina 2025-12-31 PRIO.E - MOBILITY SOLUTIONS LDA Carregamento EV 51kWh.pdf)
+2026-01-09 01:30:05 [INFO] papersqueeze: Processing document 809
+2026-01-09 01:30:05 [INFO] papersqueeze: Taking pre-state snapshot...
+Traceback (most recent call last):
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno -2] Name or service not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/__main__.py", line 7, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 282, in main
+    return cmd_func(args, config)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 139, in cmd_process
+    pre_snapshot = client.get_document_snapshot(doc_id)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/api/paperless.py", line 238, in get_document_snapshot
+    response = self.client.get(f"/documents/{doc_id}/")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1053, in get
+    return self.request(
+           ^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno -2] Name or service not known
+[2026-01-09 01:30:06] ERROR: Document 809 processing failed (exit code: 1)
+[2026-01-09 01:30:39] === PaperSqueeze post_consume.sh called ===
+[2026-01-09 01:30:39] Args: 809 test.pdf /tmp/source.pdf /tmp/thumb.webp /api/download /api/thumb Correspondent tags
+[2026-01-09 01:30:39] DOCUMENT_ID env: 809
+[2026-01-09 01:30:39] Processing document 809 (test.pdf)
+2026-01-09 01:30:41 [INFO] papersqueeze: Processing document 809
+2026-01-09 01:30:41 [INFO] papersqueeze: Taking pre-state snapshot...
+2026-01-09 01:30:41 [INFO] httpx: HTTP Request: GET http://localhost:8000/api/documents/809/ "HTTP/1.1 200 OK"
+2026-01-09 01:30:41 [INFO] httpx: HTTP Request: GET http://localhost:8000/api/tags/68/ "HTTP/1.1 200 OK"
+2026-01-09 01:30:41 [INFO] httpx: HTTP Request: GET http://localhost:8000/api/tags/37/ "HTTP/1.1 200 OK"
+2026-01-09 01:30:41 [INFO] httpx: HTTP Request: GET http://localhost:8000/api/correspondents/121/ "HTTP/1.1 200 OK"
+2026-01-09 01:30:41 [INFO] httpx: HTTP Request: GET http://localhost:8000/api/document_types/1/ "HTTP/1.1 200 OK"
+2026-01-09 01:30:41 [INFO] papersqueeze: Document: -- Aurorambarina -- Fatura
+2026-01-09 01:30:41 [INFO] papersqueeze: Correspondent: Aurorambarina
+2026-01-09 01:30:41 [INFO] papersqueeze: Document Type: Fatura
+2026-01-09 01:30:41 [INFO] papersqueeze: Tags: ['ai-processed', '📥 IN']
+2026-01-09 01:30:41 [INFO] papersqueeze: Content length: 2111
+2026-01-09 01:30:41 [INFO] papersqueeze: Content hash: c8d77310b57f33cf
+2026-01-09 01:30:41 [INFO] papersqueeze: Template selection: (not implemented yet)
+2026-01-09 01:30:41 [INFO] papersqueeze: Deterministic extraction: (not implemented yet)
+2026-01-09 01:30:41 [INFO] papersqueeze: LLM extraction: (not implemented yet - MVP skips AI)
+2026-01-09 01:30:41 [INFO] papersqueeze: Validation: (not implemented yet)
+2026-01-09 01:30:41 [INFO] papersqueeze: Commit: (not implemented yet)
+2026-01-09 01:30:41 [INFO] papersqueeze: Post-verification: (not implemented yet)
+Document 809 processed successfully (MVP: snapshot only)
+[2026-01-09 01:30:41] Document 809 processed successfully
+[2026-01-09 01:30:56] === PaperSqueeze post_consume.sh called ===
+[2026-01-09 01:30:56] Args: 810 2025-12-31 Aurorambarina 2025-12-31 Aurorambarina Unipessoal Lda Vencimento Dez'25.pdf /usr/src/paperless/media/documents/originals/PESSOAL/2025/Aurorambarina/-- Aurorambarina -- Recibo de Vencimentos.pdf /usr/src/paperless/media/documents/thumbnails/0000810.webp /api/documents/810/download/ /api/documents/810/thumb/ Aurorambarina ai-processed,💼 CTB,📧 EML,📥 IN,🏛️ IRS,🏛️ SS
+[2026-01-09 01:30:56] DOCUMENT_ID env: 810
+[2026-01-09 01:30:56] Processing document 810 (2025-12-31 Aurorambarina 2025-12-31 Aurorambarina Unipessoal Lda Vencimento Dez'25.pdf)
+2026-01-09 01:30:57 [INFO] papersqueeze: Processing document 810
+2026-01-09 01:30:57 [INFO] papersqueeze: Taking pre-state snapshot...
+Traceback (most recent call last):
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno -2] Name or service not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/__main__.py", line 7, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 282, in main
+    return cmd_func(args, config)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/cli.py", line 139, in cmd_process
+    pre_snapshot = client.get_document_snapshot(doc_id)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/src/papersqueeze/api/paperless.py", line 238, in get_document_snapshot
+    response = self.client.get(f"/documents/{doc_id}/")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1053, in get
+    return self.request(
+           ^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/src/paperless/scripts/papersqueeze/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno -2] Name or service not known
+[2026-01-09 01:30:58] ERROR: Document 810 processing failed (exit code: 1)

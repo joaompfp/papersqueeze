@@ -1,0 +1,312 @@
+services:
+  # 📄 Stirling PDF – Document conversions
+  stirling-pdf:
+    image: docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest
+    container_name: stirling-pdf
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - DOCKER_ENABLE_SECURITY=false
+      - LANGS=pt_PT
+    volumes:
+      - ${DOCKERDIR}/appdata/stirling-pdf/trainingData:/usr/share/tessdata # Required for extra OCR languages
+      - ${DOCKERDIR}/appdata/stirling-pdf/extraConfigs:/configs
+      - ${DOCKERDIR}/appdata/stirling-pdf/customFiles:/customFiles
+      - ${DOCKERDIR}/appdata/stirling-pdf/logs:/logs
+      - ${DOCKERDIR}/appdata/stirling-pdf/pipeline:/pipeline
+    networks:
+      - t2_proxy
+    ports:
+      - "8081:8080"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.stirling-rtr.rule=Host(`pdf.${DOMAINNAME}`)"
+      - "traefik.http.routers.stirling-rtr.entrypoints=websecure"
+      - "traefik.http.routers.stirling-rtr.tls=true"
+      - "traefik.http.routers.stirling-rtr.tls.certresolver=dns-cloudflare"
+      - "traefik.http.routers.stirling-rtr.middlewares=chain-authelia@file"
+      - "traefik.http.services.stirling-svc.loadbalancer.server.port=8080"
+      # 🔥 Flame dashboard
+      - "flame.type=app"
+      - "flame.name=Stirling PDF"
+      - "flame.url=https://pdf.${DOMAINNAME}"
+      - "flame.icon=file-pdf-box"
+      - "flame.group=Office"
+
+
+# 1️⃣  Postgres SQL server - For Joplin and Etherpad
+  office-postgres-db:
+    image: postgres:15
+    container_name: office-postgres-db
+    restart: unless-stopped
+    user: ${PUID}:${PGID}
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - POSTGRES_PASSWORD=${POSTGRES_SUPERUSER_PASS}
+    volumes:
+      - ${DOCKERDIR}/appdata/postgres/db:/var/lib/postgresql/data
+      - ${DOCKERDIR}/appdata/postgres/initdb:/docker-entrypoint-initdb.d
+    networks:
+      - office_net
+        
+# 1️⃣  Etherpad – Online Notepad
+  etherpad:
+#    image: custom-etherpad:latest
+    image: etherpad/etherpad:latest
+    container_name: etherpad
+    init: true                       # give it a PID 1 init that can reap children
+    user: "0:0"
+    restart: unless-stopped
+    depends_on:
+      - office-postgres-db
+    tty: true
+    stdin_open: true
+    environment:
+      - AUTHENTICATION_METHOD=apikey
+      - TZ=${TZ}
+      - DB_TYPE=postgres
+      - DB_HOST=office-postgres-db
+      - DB_PORT=5432
+      - DB_NAME=etherpad
+      - DB_USER=etherpad
+      - DB_PASS=${ETHERPAD_DB_PASS}
+      - TRUST_PROXY=true
+      - ADMIN_PASSWORD=${ETHERPAD_ADMIN_PASS}
+      - EDIT_ONLY=true
+      - TRUST_PROXY=true
+      - COOKIE_SAME_SITE=None
+      - COOKIE_SECURE=true
+      - COOKIE_SESSION_LIFETIME=864000000
+      - LOGLEVEL=DEBUG
+    volumes:
+      - ${DOCKERDIR}/resolv.conf:/etc/resolv.conf:ro
+      - ${DOCKERDIR}/appdata/etherpad/APIKEY.txt:/opt/etherpad-lite/APIKEY.txt:ro
+      - ${DOCKERDIR}/appdata/etherpad/settings.json:/opt/etherpad-lite/settings.json
+      - ${DOCKERDIR}/appdata/etherpad/installed_plugins.json:/opt/etherpad-lite/var/installed_plugins.json
+      - etherpad-plugins:/opt/etherpad-lite/src/plugin_packages
+      - etherpad-var:/opt/etherpad-lite/var
+    networks:
+      - office_net
+      - t2_proxy
+    labels:
+      - "traefik.enable=true"
+      # 1) Public router: catches ALL requests to notas.$DOMAINNAME
+      - "traefik.http.routers.etherpad-public.rule=Host(`notas.${DOMAINNAME}`)"
+      - "traefik.http.routers.etherpad-public.entrypoints=websecure"
+      - "traefik.http.routers.etherpad-public.tls=true"
+      - "traefik.http.routers.etherpad-public.tls.certresolver=dns-cloudflare"
+      - "traefik.http.routers.etherpad-public.service=etherpad-svc"
+      - "traefik.http.routers.etherpad-public.middlewares=chain-no-auth@file"
+      # 2) Secure: Everything Else - Admin Interface
+      - "traefik.http.routers.etherpad-secure.rule=Host(`notas.${DOMAINNAME}`) && (PathPrefix(`/admin`) || PathPrefix(`/admin-auth`))"
+      - "traefik.http.routers.etherpad-secure.entrypoints=websecure"
+      - "traefik.http.routers.etherpad-secure.tls=true"
+      - "traefik.http.routers.etherpad-secure.tls.certresolver=dns-cloudflare"
+      - "traefik.http.routers.etherpad-secure.service=etherpad-svc"
+      - "traefik.http.routers.etherpad-secure.middlewares=chain-authelia@file" 
+      # Shared service definition
+      - "traefik.http.services.etherpad-svc.loadbalancer.server.port=9001"
+      - "flame.type=app"
+      - "flame.name=Etherpad"
+      - "flame.url=https://notas.${DOMAINNAME}/admin"
+      - "flame.icon=notebook-outline"
+      - "flame.group=Office"
+
+
+# 1️⃣  Joplin Server – Notes Sync
+  joplin:
+    image: joplin/server:latest
+    container_name: joplin
+    restart: unless-stopped
+    depends_on:
+      - office-postgres-db
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - APP_PORT=22300
+      - APP_BASE_URL=https://joplin.${DOMAINNAME}
+      - DB_CLIENT=pg
+      - POSTGRES_PASSWORD=${JOPLIN_DB_PASS}
+      - POSTGRES_DATABASE=joplin
+      - POSTGRES_USER=joplin
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=office-postgres-db
+      - DISABLE_NETWORK_TIME_CHECK=true
+      - MAX_TIME_DRIFT=0
+    networks:
+      - office_net
+      - t2_proxy
+    volumes:
+      - ${DOCKERDIR}/resolv.conf:/etc/resolv.conf:ro
+    labels:
+      - "traefik.enable=true"
+      # 🔓 API route (open, no Authelia)
+      - "traefik.http.routers.joplin-api-rtr.rule=Host(`joplin.${DOMAINNAME}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.joplin-api-rtr.entrypoints=websecure"
+      - "traefik.http.routers.joplin-api-rtr.tls=true"
+      - "traefik.http.routers.joplin-api-rtr.tls.certresolver=dns-cloudflare"
+      - "traefik.http.routers.joplin-api-rtr.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.joplin-api-rtr.service=joplin-svc"
+      # 🔐 Web UI route (protected with Authelia)
+      - "traefik.http.routers.joplin-ui-rtr.rule=Host(`joplin.${DOMAINNAME}`)"
+      - "traefik.http.routers.joplin-ui-rtr.entrypoints=websecure"
+      - "traefik.http.routers.joplin-ui-rtr.tls=true"
+      - "traefik.http.routers.joplin-ui-rtr.tls.certresolver=dns-cloudflare"
+      - "traefik.http.routers.joplin-ui-rtr.middlewares=chain-authelia@file"
+      - "traefik.http.routers.joplin-ui-rtr.service=joplin-svc"
+      # 📦 Shared service definition
+      - "traefik.http.services.joplin-svc.loadbalancer.server.port=22300"
+      # 🔥 Flame dashboard
+      - "flame.type=app"
+      - "flame.name=Joplin Server"
+      - "flame.url=https://joplin.${DOMAINNAME}"
+      - "flame.icon=note-edit-outline"
+      - "flame.group=Office"
+
+###############################################################################
+# 3️⃣  FileBrowser – Browse Host Files
+  filebrowser:
+    image: filebrowser/filebrowser:s6
+    container_name: filebrowser
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    networks:
+      - t2_proxy
+      - office_net
+    volumes:
+      - ${USERDIR}:/srv
+      - ${DOCKERDIR}/appdata/filebrowser/config:/config
+      - ${DOCKERDIR}/appdata/filebrowser/database:/database
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.filebrowser-rtr.rule=Host(`files.${DOMAINNAME}`)"
+      - "traefik.http.routers.filebrowser-rtr.entrypoints=websecure"
+      - "traefik.http.routers.filebrowser-rtr.tls=true"
+      - "traefik.http.routers.filebrowser-rtr.tls.certresolver=dns-cloudflare"
+      - "traefik.http.routers.filebrowser-rtr.middlewares=chain-authelia@file"
+      - "traefik.http.services.filebrowser-svc.loadbalancer.server.port=80"
+      # 🔥 Flame dashboard
+      - "flame.type=app"
+      - "flame.name=File Browser"
+      - "flame.url=https://files.${DOMAINNAME}"
+      - "flame.icon=folder-open-outline"
+      - "flame.group=Office"
+
+# 📄 Paperless-ngx – Document Management System
+  paperless-redis:
+    image: redis:7
+    container_name: paperless-redis
+    restart: unless-stopped
+    user: "${PUID}:${PGID}"
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    networks:
+      - office_net
+    volumes:
+      - ${DOCKERDIR}/appdata/paperless/redis:/data
+
+  paperless-ngx:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless-ngx
+    restart: unless-stopped
+    depends_on:
+      - office-postgres-db
+      - paperless-redis
+    environment:
+      - TZ=${TZ}
+      - USERMAP_UID=${PUID}
+      - USERMAP_GID=${PGID}
+      - PAPERLESS_DBENGINE=postgresql
+      - PAPERLESS_DBHOST=office-postgres-db
+      - PAPERLESS_DBNAME=paperless
+      - PAPERLESS_DBUSER=paperless
+      - PAPERLESS_DBPASS=${PAPERLESS_DB_PASS}
+      - PAPERLESS_DBPORT=5432
+      - PAPERLESS_REDIS=redis://paperless-redis:6379
+      # OCR Configuration
+      - PAPERLESS_OCR_LANGUAGE=por+eng
+      #- PAPERLESS_OCR_MODE=skip_noarchive
+      - PAPERLESS_OCR_OUTPUT_TYPE=pdfa
+      - PAPERLESS_OCR_PAGES=0  # OCR all pages (0 = unlimited)
+      - PAPERLESS_OCR_IMAGE_DPI=300
+      # Conservative preprocessing
+      - PAPERLESS_OCR_DESKEW=true
+      - PAPERLESS_OCR_ROTATE_PAGES=true
+      - PAPERLESS_OCR_CLEAN=clean
+      # Resource limits for i3
+      - PAPERLESS_TASK_WORKERS=2
+      - PAPERLESS_THREADS_PER_WORKER=2
+      - PAPERLESS_WORKER_TIMEOUT=3600
+      # App settings
+      - PAPERLESS_URL=https://docs.${DOMAINNAME}
+      - PAPERLESS_CSRF_TRUSTED_ORIGINS=https://docs.${DOMAINNAME},https://localhost
+      - PAPERLESS_ALLOWED_HOSTS=https://docs.${DOMAINNAME},https://localhost,https://127.0.0.1
+      - PAPERLESS_CORS_ALLOWED_HOSTS=
+      - PAPERLESS_CONSUMER_POLLING=60
+      - PAPERLESS_CONSUMER_DELETE_DUPLICATES=true
+      - PAPERLESS_CONSUMER_RECURSIVE=true
+      - PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS=true
+      - PAPERLESS_API_TOKEN=${PAPERLESS_API_TOKEN}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - PAPERLESS_POST_CONSUME_SCRIPT=/usr/src/paperless/scripts/post_consume.sh
+    volumes:
+      - ${DOCKERDIR}/appdata/paperless/data:/usr/src/paperless/data
+      - ${DOCKERDIR}/appdata/paperless/media:/usr/src/paperless/media
+      - ${DOCKERDIR}/appdata/paperless/export:/usr/src/paperless/export
+      - ${DOCKERDIR}/appdata/paperless/consume:/usr/src/paperless/consume
+      - ${DOCKERDIR}/appdata/paperless/custom-cont-init.d:/custom-cont-init.d
+      - ${DOCKERDIR}/appdata/paperless/scripts:/usr/src/paperless/scripts
+      - ${DOCKERDIR}/appdata/paperless/tessdata:/usr/share/tesseract-ocr/5/tessdata:ro
+      - ${DOCKERDIR}/resolv.conf:/etc/resolv.conf:ro
+    networks:
+      - office_net
+      - t2_proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.paperless-api-rtr.rule=Host(`docs.${DOMAINNAME}`) && PathPrefix(`/api/`)"
+      - "traefik.http.routers.paperless-api-rtr.entrypoints=websecure"
+      - "traefik.http.routers.paperless-api-rtr.tls=true"
+      - "traefik.http.routers.paperless-api-rtr.tls.certresolver=dns-cloudflare"
+      - "traefik.http.routers.paperless-api-rtr.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.paperless-api-rtr.service=paperless-svc"
+      - "traefik.http.routers.paperless-api-rtr.priority=100"
+      - "traefik.http.routers.paperless-rtr.rule=Host(`docs.${DOMAINNAME}`)"
+      - "traefik.http.routers.paperless-rtr.entrypoints=websecure"
+      - "traefik.http.routers.paperless-rtr.tls=true"
+      - "traefik.http.routers.paperless-rtr.tls.certresolver=dns-cloudflare"
+      - "traefik.http.routers.paperless-rtr.middlewares=chain-authelia@file"
+      - "traefik.http.routers.paperless-rtr.service=paperless-svc"
+      - "traefik.http.services.paperless-svc.loadbalancer.server.port=8000"
+      - "flame.type=app"
+      - "flame.name=Paperless-ngx"
+      - "flame.url=https://docs.${DOMAINNAME}"
+      - "flame.icon=file-document-multiple-outline"
+      - "flame.group=Office"
+      
+volumes:
+  etherpad-plugins:
+    name: "office-etherpad-plugins"
+  etherpad-var:
+    name: "office-etherpad-var"
+
+networks:  
+  office_net:
+    name: office_net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+  t2_proxy:
+    external: true
+  socket_proxy:
+    external: true

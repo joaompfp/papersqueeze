@@ -1,0 +1,245 @@
+# PaperSqueeze Templates Configuration
+# Defines document types and extraction rules
+
+defaults:
+  timeout_ms: 30000
+  max_content_length: 25000
+  retry_attempts: 2
+
+# Base prompts for AI operations
+base_prompts:
+  # Gatekeeper: Fast classification of document type
+  gatekeeper: |
+    You are a document classification expert for Portuguese administrative documents.
+
+    Your task is to identify the document type from the available templates.
+    Analyze:
+    - Document structure and layout
+    - Logos and headers
+    - Tax IDs (NIF) of issuers
+    - Key terminology
+
+    Distinguish between:
+    - Utility invoices (electricity, water, gas)
+    - Tax authority documents (AT - Autoridade Tributária)
+    - Traffic fines (ANSR)
+    - General invoices and receipts
+
+    Return ONLY valid JSON: {"template_id": "selected_id", "confidence": 0.95}
+
+  # Specialist: Detailed data extraction
+  specialist: |
+    You are a high-fidelity data extraction engine for Portuguese documents.
+
+    Extraction rules:
+    - Monetary values: Numbers only, no symbols (e.g., 123.45 not 123,45€)
+    - Dates: Always YYYY-MM-DD format
+    - Metrics: Pure numbers only (e.g., 150 not 150 kWh)
+    - NIFs: 9 digits only
+    - MB references: Digits only
+
+    For each field, estimate your confidence (0.0 to 1.0) based on:
+    - Clarity of the source text
+    - Ambiguity in interpretation
+    - Completeness of extraction
+
+    Return valid JSON with fields and confidence scores.
+
+# Document templates
+templates:
+  # Energy utilities (Iberdrola, EDP, etc.)
+  - id: "utilities_energy"
+    description: "Electricity and Gas invoices (Iberdrola, EDP)"
+    correspondent_hint: "IBERDROLA"
+    document_type: "Invoice"
+
+    extraction:
+      rules: |
+        1. Find 'Consumo' or consumption value in kWh - extract NUMBER ONLY
+        2. Find 'Potência Contratada' - keep the kVA unit (e.g., "6.9 kVA")
+        3. Billing period usually shown as MM/YYYY
+        4. Total amount is 'Total a Pagar' or 'Valor Total'
+        5. Invoice number may start with 'FT' or similar prefix
+      fields:
+        - name: issue_date
+          type: date
+          required: true
+          description: "Invoice issue date"
+        - name: total_gross
+          type: amount
+          required: true
+          description: "Total amount to pay"
+        - name: period
+          type: string
+          required: false
+          description: "Billing period (MM/YYYY)"
+        - name: consumption_kwh
+          type: number
+          required: false
+          description: "Energy consumption (kWh, number only)"
+        - name: contract_power
+          type: string
+          required: false
+          description: "Contracted power (e.g., 6.9 kVA)"
+        - name: invoice_number
+          type: string
+          required: false
+          description: "Invoice reference number"
+
+    field_mapping:
+      total_gross: "Total Gross"
+      period: "Period"
+      consumption_kwh: "Consumption"
+      contract_power: "Contract Reference"
+      invoice_number: "Invoice Number"
+
+    title_format: "{issue_date} | Contr. {contract_power} | {consumption_kwh} kWh | {total_gross} EUR"
+    tags_add: ["ai-processed"]
+    tags_suggest: ["utilities"]
+
+  # Water utilities (EPAL, etc.)
+  - id: "utilities_water"
+    description: "Water invoices (EPAL)"
+    correspondent_hint: "EPAL"
+    document_type: "Invoice"
+
+    extraction:
+      rules: |
+        1. Find 'Consumo' or 'm³' value - extract NUMBER ONLY
+        2. Look for 'LOCAL N.º' as the installation code
+        3. Invoice number typically starts with 'FT'
+        4. Total is 'Total a Pagar'
+      fields:
+        - name: issue_date
+          type: date
+          required: true
+        - name: total_gross
+          type: amount
+          required: true
+        - name: consumption_vol
+          type: number
+          required: false
+          description: "Water consumption (m³, number only)"
+        - name: local_code
+          type: string
+          required: false
+          description: "Installation code (LOCAL N.º)"
+
+    field_mapping:
+      total_gross: "Total Gross"
+      consumption_vol: "Consumption"
+      local_code: "Contract Reference"
+
+    title_format: "{issue_date} | CPE {local_code} | {consumption_vol} m³ | {total_gross} EUR"
+    tags_add: ["ai-processed"]
+    tags_suggest: ["utilities"]
+
+  # Tax authority documents
+  - id: "tax_at_guides"
+    description: "Tax Authority documents (IRS, DMR, IUC)"
+    document_type: "Tax Guide"
+
+    extraction:
+      rules: |
+        1. Identify tax type: DMR (monthly salary declaration), IUC (vehicle tax), IRS (income tax)
+        2. Period format: YYYY/MM or just YYYY
+        3. Payment reference is a 15-digit number
+        4. Amount is in 'Valor a Pagar' or 'Montante'
+        5. Look for AT logo or 'Autoridade Tributária' header
+      fields:
+        - name: issue_date
+          type: date
+          required: true
+        - name: total_gross
+          type: amount
+          required: true
+        - name: tax_period
+          type: string
+          required: false
+          description: "Tax period (YYYY/MM)"
+        - name: tax_type
+          type: string
+          required: false
+          description: "Type of tax (DMR, IUC, IRS, etc.)"
+        - name: mb_ref_full
+          type: string
+          required: false
+          description: "Payment reference (15 digits)"
+
+    field_mapping:
+      total_gross: "Total Gross"
+      tax_period: "Period"
+      mb_ref_full: "Full MB Reference"
+
+    title_format: "{issue_date} | AT (Tax) | {tax_type} {tax_period} | {total_gross} EUR"
+    tags_add: ["ai-processed", "tax"]
+
+  # Traffic fines
+  - id: "law_enforcement_fines"
+    description: "Traffic fines (ANSR). High priority."
+    document_type: "Payment Guide"
+
+    extraction:
+      rules: |
+        1. Fine amount (COIMA) - may be 50% discount for early payment
+        2. Citation number is the primary identifier
+        3. License plate in XX-XX-XX format
+        4. CRITICAL: Due date is typically 15 days from issue
+        5. Look for ANSR logo or 'Autoridade Nacional de Segurança Rodoviária'
+      fields:
+        - name: issue_date
+          type: date
+          required: true
+        - name: total_gross
+          type: amount
+          required: true
+        - name: plate
+          type: string
+          required: false
+          description: "Vehicle license plate"
+        - name: citation_number
+          type: string
+          required: false
+          description: "Fine citation number"
+
+    field_mapping:
+      total_gross: "Total Gross"
+      citation_number: "Invoice Number"
+      plate: "Contract Reference"
+
+    title_format: "{issue_date} | Fine {citation_number} | {plate} | {total_gross} EUR"
+    tags_add: ["ai-processed", "car"]
+    auto_due_date_days: 15
+
+  # Fallback for general documents
+  - id: "fallback_general"
+    description: "General invoices and receipts"
+    document_type: "Invoice"
+
+    extraction:
+      rules: |
+        1. Extract supplier/issuer name
+        2. Invoice date
+        3. Total amount
+        4. Invoice/receipt number if visible
+      fields:
+        - name: issue_date
+          type: date
+          required: true
+        - name: total_gross
+          type: amount
+          required: true
+        - name: supplier
+          type: string
+          required: false
+          description: "Supplier/issuer name"
+        - name: invoice_number
+          type: string
+          required: false
+
+    field_mapping:
+      total_gross: "Total Gross"
+      invoice_number: "Invoice Number"
+
+    title_format: "{issue_date} | {supplier} | {invoice_number} | {total_gross} EUR"
+    tags_add: ["ai-processed"]
